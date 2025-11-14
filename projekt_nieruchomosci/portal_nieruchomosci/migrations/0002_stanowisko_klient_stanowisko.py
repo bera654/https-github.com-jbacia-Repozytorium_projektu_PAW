@@ -22,6 +22,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='klient',
             name='stanowisko',
-            field=models.ForeignKey(default='agent', on_delete=django.db.models.deletion.CASCADE, to='portal_nieruchomosci.stanowisko'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='portal_nieruchomosci.stanowisko'),
         ),
     ]

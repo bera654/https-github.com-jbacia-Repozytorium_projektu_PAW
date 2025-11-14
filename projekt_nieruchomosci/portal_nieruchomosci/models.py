@@ -19,7 +19,7 @@ class PropertyType(models.Model):
     typical_features = models.CharField(
         max_length=200,
         blank=True,
-        help_text="Typowe cechy tego typu nieruchomości (np. metraż, liczba pokoi)."
+        help_text="Typowe cechy tego typu nieruchomości."
     )
     is_residential = models.BooleanField(default=True, help_text="Czy nieruchomość jest mieszkalna.")
     popularity_rank = models.PositiveSmallIntegerField(
@@ -78,4 +78,4 @@ class Klient(models.Model):
 
 
     def __str__(self):
-        return self.nazwa
+        return f"{self.imie} {self.nazwisko}"
