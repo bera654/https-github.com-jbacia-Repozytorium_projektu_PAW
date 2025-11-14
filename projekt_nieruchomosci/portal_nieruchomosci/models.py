@@ -33,8 +33,15 @@ class PropertyType(models.Model):
 
 class Agent(models.Model):
     """Model reprezentujący agenta nieruchomości."""
+    Stanowisko = (
+    ('A', 'Agent nieruchomości'),
+    ('D', 'Doradca sprzeday'),
+    ('O', 'Osoba prywatna' ),
+    ('F', 'Firma' )
+)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    stanowisko = models.CharField(max_length=1, choices=Stanowisko, default="A")
     region = models.CharField(max_length=2, help_text="Kod regionu lub kraju, np. PL, DE, CZ")
 
     def __str__(self):
@@ -65,7 +72,9 @@ class Klient(models.Model):
     imie = models.CharField(max_length=50, blank=False, null=False)
     nazwisko = models.CharField(max_length=100, blank=False, null=False)
     plec = models.CharField(max_length=1, choices=PLEC_WYBOR, default="I")
-    data_dodania = models.DateField(auto_now_add=True, editable=False, read_only=True)
+    data_dodania = models.DateField(auto_now_add=True, editable=False)
+
+
 
 
     def __str__(self):
