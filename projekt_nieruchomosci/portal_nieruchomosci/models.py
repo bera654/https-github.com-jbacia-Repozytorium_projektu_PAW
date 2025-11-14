@@ -87,6 +87,17 @@ class Property(models.Model):
         blank=True,
         help_text="Opis nieruchomości"
     )
+    pool = models.BooleanField(default=True, help_text="Czy nieruchomość ma basen?")
+    sauna = models.BooleanField(default=True, help_text="Czy nieruchomość ma saunę?")
+    jacuzzi = models.BooleanField(default=True, help_text="Czy nieruchomość ma jacuzzi?")
+    lift = models.BooleanField(default=True, help_text="Czy nieruchomość ma windę?")
+    garage = models.BooleanField(default=True, help_text="Czy nieruchomość ma garaz lub prywatne miejsce parkingowe?")
+    balcony = models.BooleanField(default=True, help_text="Czy nieruchomość ma balkon?")
+    terrace = models.BooleanField(default=True, help_text="Czy nieruchomość ma taras?")
+    garden = models.BooleanField(default=True, help_text="Czy nieruchomość ma ogród?")
+    AC = models.BooleanField(default=True, help_text="Czy nieruchomość ma klimatyzacja?")
+    safety_system = models.BooleanField(default=True, help_text="Czy nieruchomość ma alarm lub całodobową ochronę?")
+    needs_renovation = models.BooleanField(default=True, help_text="Czy nieruchomość jest do remontu?")
 
     def __str__(self):
         return self.title
@@ -105,7 +116,7 @@ class Klient(models.Model):
     imie = models.CharField(max_length=50, blank=False, null=False)
     nazwisko = models.CharField(max_length=100, blank=False, null=False)
     plec = models.CharField(max_length=1, choices=PLEC_WYBOR, default="I")
-    data_dodania = models.DateField(auto_now_add=True, editable=False)
+    data_dodania = models.DateField(auto_now_add=True, editable=False) #kiedy zarejestrował się w serwisie
 
 
 
