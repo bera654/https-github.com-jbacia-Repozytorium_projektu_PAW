@@ -8,5 +8,17 @@
 <p>Stanowisko: {{ agent.get_stanowisko_display }}</p>
 <p>Region: {{ agent.region }}</p>
 
-<a href="/html/agents/">← Wróć do listy</a>
+<a class="btn-tertiary" href="{% url 'agent-update-html' agent.id %}">
+   Edytuj agenta
+</a>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit"
+            onclick="return confirm('Czy na pewno chcesz usunąć tego agenta?');">
+        Usuń agenta
+    </button>
+</form>
+<a href="{% url 'agent-list-html' %}">← Wróć do listy</a>
+
 {% endblock %}

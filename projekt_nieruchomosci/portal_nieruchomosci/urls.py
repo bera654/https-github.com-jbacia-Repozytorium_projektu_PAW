@@ -27,17 +27,25 @@ urlpatterns = [
     #agent
     path("agenci/", views.agent_list, name="agent-list"),
     path("agenci/<int:pk>/", views.agent_detail, name="agent-detail"),
-
-    #HTML 
-    path("html/properties/", views.property_list_html, name="property-list-html"),
-    path("html/properties/<int:id>/", views.property_detail_html, name="property-detail-html"),
-
-
     path("html/agents/", views.agent_list_html, name="agent-list-html"),
     path("html/agents/<int:id>/", views.agent_detail_html, name="agent-detail-html"),
+    path("html/agents/<int:id>/edytuj/",views.agent_update_html,name="agent-update-html"),
 
+
+    #properties 
+    path("html/properties/", views.property_list_html, name="property-list-html"),
+    path("html/properties/<int:id>/", views.property_detail_html, name="property-detail-html"),
+    path("html/properties/<int:id>/edytuj/",views.property_update_html,name="property-update-html"),
+
+
+
+    
     #klient html
     path("html/klienci/", views.klient_list_html, name="klient-list-html"),
     path("html/klienci/dodaj/", views.klient_create_html, name="klient-create-html"),
     path("html/klienci/search/", views.klient_search_html, name="klient-search-html"),
+    path("html/klienci/<int:id>/", views.klient_detail_html, name="klient-detail-html"),
+    path("html/klienci/<int:id>/edytuj/",views.klient_update_html,name="klient-update-html"),
+
+
 ]

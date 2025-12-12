@@ -25,6 +25,20 @@
     {% if property.safety_system %}<li>System bezpieczeństwa</li>{% endif %}
     {% if property.needs_renovation %}<li>Wymaga remontu</li>{% endif %}
 </ul>
+<a class="btn-tertiary" href="{% url 'property-update-html' property.id %}">
+  Edytuj ofertę
+</a>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit"
+            onclick="return confirm('Czy na pewno chcesz usunąć tę nieruchomość?');">
+        Usuń ofertę
+    </button>
+</form>
+
 
 <a href="{% url 'property-list-html' %}">← Wróć do listy</a>
 {% endblock %}
+
+

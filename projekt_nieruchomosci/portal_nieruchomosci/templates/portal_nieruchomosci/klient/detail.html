@@ -1,0 +1,27 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}{{ klient.imie }} {{ klient.nazwisko }}{% endblock %}
+
+{% block content %}
+<h2>Szczegóły klienta</h2>
+
+<p><strong>Imię:</strong> {{ klient.imie }}</p>
+<p><strong>Nazwisko:</strong> {{ klient.nazwisko }}</p>
+<p><strong>Płeć:</strong> {{ klient.plec }}</p>
+<p><strong>Data dodania:</strong> {{ klient.data_dodania }}</p>
+
+<a class="btn-tertiary"
+   href="{% url 'klient-update-html' klient.id %}">
+    Edytuj klienta
+</a>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit"
+            onclick="return confirm('Czy na pewno chcesz usunąć tego klienta?');">
+        Usuń klienta
+    </button>
+</form>
+
+<p><a href="{% url 'klient-list-html' %}">← Wróć do listy klientów</a></p>
+{% endblock %}

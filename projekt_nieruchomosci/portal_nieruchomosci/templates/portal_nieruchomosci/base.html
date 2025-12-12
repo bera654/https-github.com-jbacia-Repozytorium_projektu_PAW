@@ -64,8 +64,9 @@
     </div>
 
     <nav>
-        <a href="/api/html/properties/">Oferty</a>
-        <a href="/api/html/agents/">Agenci</a>
+        <a href="{% url 'property-list-html' %}">Oferty</a>
+        <a href="{% url 'agent-list-html' %}">Agenci</a>
+        <a href="{% url 'klient-list-html' %}">Klienci</a>
     </nav>
 
     <div id="content">

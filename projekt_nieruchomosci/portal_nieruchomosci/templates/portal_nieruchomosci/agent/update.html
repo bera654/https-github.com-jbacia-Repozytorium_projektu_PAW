@@ -1,0 +1,52 @@
+{% extends "portal_nieruchomosci/base.html" %}
+{% block title %}Edytuj agenta{% endblock %}
+
+{% block content %}
+<h2>Edytuj agenta</h2>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label>Imię</label><br>
+    <input type="text" name="first_name" value="{{ agent.first_name }}">
+  </p>
+
+  <p>
+    <label>Nazwisko</label><br>
+    <input type="text" name="last_name" value="{{ agent.last_name }}">
+  </p>
+
+  <p>
+    <label>Region</label><br>
+    <input type="text" name="region" value="{{ agent.region }}">
+  </p>
+
+  <p>
+    <label>Stanowisko</label><br>
+    <select name="stanowisko">
+      <option value="A" {% if agent.stanowisko == "A" %}selected{% endif %}>
+        Agent nieruchomości
+      </option>
+      <option value="D" {% if agent.stanowisko == "D" %}selected{% endif %}>
+        Doradca sprzedaży
+      </option>
+      <option value="O" {% if agent.stanowisko == "O" %}selected{% endif %}>
+        Osoba prywatna
+      </option>
+      <option value="F" {% if agent.stanowisko == "F" %}selected{% endif %}>
+        Firma
+      </option>
+    </select>
+  </p>
+
+  <button type="submit" class="btn">Zapisz zmiany</button>
+  <a class="btn-tertiary" href="{% url 'agent-detail-html' agent.id %}">
+    Anuluj
+  </a>
+</form>
+{% endblock %}

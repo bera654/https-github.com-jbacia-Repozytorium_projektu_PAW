@@ -106,11 +106,58 @@ def property_list_html(request):
 
 def property_detail_html(request, id):
     property_obj = get_object_or_404(Property, id=id)
+    if request.method == "POST":
+        property_obj.delete()
+        return redirect("property-list-html") 
     return render(
         request,
         "portal_nieruchomosci/property/detail.html",
         {"property": property_obj}
     )
+
+def property_update_html(request, id):
+    property_obj = get_object_or_404(Property, id=id)
+
+    if request.method == "GET":
+        return render(
+            request,
+            "portal_nieruchomosci/property/update.html",
+            {"property": property_obj}
+        )
+
+    elif request.method == "POST":
+        # pola tekst/liczby
+        property_obj.title = request.POST.get("title")
+        property_obj.location = request.POST.get("location")
+        property_obj.description = request.POST.get("description")
+        property_obj.price = request.POST.get("price")
+        property_obj.square_meters = request.POST.get("square_meters")
+
+        # checkboxy (True jeśli zaznaczone)
+        property_obj.pool = bool(request.POST.get("pool"))
+        property_obj.sauna = bool(request.POST.get("sauna"))
+        property_obj.jacuzzi = bool(request.POST.get("jacuzzi"))
+        property_obj.lift = bool(request.POST.get("lift"))
+        property_obj.garage = bool(request.POST.get("garage"))
+        property_obj.balcony = bool(request.POST.get("balcony"))
+        property_obj.terrace = bool(request.POST.get("terrace"))
+        property_obj.garden = bool(request.POST.get("garden"))
+        property_obj.AC = bool(request.POST.get("AC"))
+        property_obj.safety_system = bool(request.POST.get("safety_system"))
+        property_obj.needs_renovation = bool(request.POST.get("needs_renovation"))
+
+        # prosta walidacja
+        if not (property_obj.title and property_obj.location and property_obj.price and property_obj.square_meters):
+            error = "Tytuł, lokalizacja, cena i metraż są wymagane."
+            return render(
+                request,
+                "portal_nieruchomosci/property/update.html",
+                {"property": property_obj, "error": error}
+            )
+
+        property_obj.save()
+        return redirect("property-detail-html", id=property_obj.id)
+
 
 #lista agents
 def agent_list_html(request):
@@ -120,7 +167,44 @@ def agent_list_html(request):
 #detale agentow
 def agent_detail_html(request, id):
     agent = get_object_or_404(Agent, id=id)
-    return render(request, "portal_nieruchomosci/agent/detail.html", {"agent": agent})
+
+    if request.method == "POST":
+        agent.delete()
+        return redirect("agent-list-html")
+
+    return render(
+        request,
+        "portal_nieruchomosci/agent/detail.html",
+        {"agent": agent}
+    )
+
+def agent_update_html(request, id):
+    agent = get_object_or_404(Agent, id=id)
+
+    if request.method == "GET":
+        return render(
+            request,
+            "portal_nieruchomosci/agent/update.html",
+            {"agent": agent}
+        )
+
+    elif request.method == "POST":
+        agent.first_name = request.POST.get("first_name")
+        agent.last_name = request.POST.get("last_name")
+        agent.region = request.POST.get("region")
+        agent.stanowisko = request.POST.get("stanowisko")
+
+        if not (agent.first_name and agent.last_name and agent.stanowisko):
+            error = "Imię, nazwisko i stanowisko są wymagane."
+            return render(
+                request,
+                "portal_nieruchomosci/agent/update.html",
+                {"agent": agent, "error": error}
+            )
+
+        agent.save()
+        return redirect("agent-detail-html", id=agent.id)
+
 
 
 #lista klientow html
@@ -178,3 +262,40 @@ def klient_search_html(request):
         "portal_nieruchomosci/klient/search.html",
         {"klienci": klienci, "query": query}
     )
+def klient_detail_html(request, id):
+    klient = get_object_or_404(Klient, id=id)
+
+    if request.method == "POST":
+        klient.delete()
+        return redirect("klient-list-html")
+
+    return render(
+        request,
+        "portal_nieruchomosci/klient/detail.html",
+        {"klient": klient}
+    )
+def klient_update_html(request, id):
+    klient = get_object_or_404(Klient, id=id)
+
+    if request.method == "GET":
+        return render(
+            request,
+            "portal_nieruchomosci/klient/update.html",
+            {"klient": klient}
+        )
+
+    elif request.method == "POST":
+        klient.imie = request.POST.get("imie")
+        klient.nazwisko = request.POST.get("nazwisko")
+        klient.plec = request.POST.get("plec")
+
+        if not (klient.imie and klient.nazwisko and klient.plec):
+            error = "Wszystkie pola są wymagane."
+            return render(
+                request,
+                "portal_nieruchomosci/klient/update.html",
+                {"klient": klient, "error": error}
+            )
+
+        klient.save()
+        return redirect("klient-detail-html", id=klient.id)

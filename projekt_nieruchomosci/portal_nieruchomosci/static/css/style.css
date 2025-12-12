@@ -130,3 +130,16 @@
     background: #0059c9;
 }
 
+.btn-tertiary {
+    background: transparent;
+    color: #3056d3;
+    padding: 4px 8px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.btn-tertiary:hover {
+    background: rgba(48, 86, 211, 0.1);
+    text-decoration: underline;
+}
