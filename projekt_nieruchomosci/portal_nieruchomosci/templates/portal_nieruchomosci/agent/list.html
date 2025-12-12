@@ -1,0 +1,19 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Lista agentów{% endblock %}
+
+{% block content %}
+<h2>Lista agentów</h2>
+
+{% for a in agents %}
+    <p>
+        <strong>{{ a.first_name }} {{ a.last_name }}</strong><br>
+        Stanowisko: {{ a.get_stanowisko_display }}<br>
+        Region: {{ a.region }}<br>
+        <a href="/html/agents/{{ a.id }}/">Szczegóły</a>
+    </p>
+    <hr>
+{% empty %}
+    <p>Brak agentów.</p>
+{% endfor %}
+{% endblock %}

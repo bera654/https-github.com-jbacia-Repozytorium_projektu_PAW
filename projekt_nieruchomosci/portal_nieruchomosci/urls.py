@@ -19,12 +19,25 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Osoba = Klient
+    #klient
     path("klienci/", views.klient_list, name="klient-list"),
     path("klienci/<int:pk>/", views.klient_detail, name="klient-detail"),
     path("klienci/search/", views.klient_search, name="klient-search"),
 
-    # Stanowisko = Agent
+    #agent
     path("agenci/", views.agent_list, name="agent-list"),
     path("agenci/<int:pk>/", views.agent_detail, name="agent-detail"),
+
+    #HTML 
+    path("html/properties/", views.property_list_html, name="property-list-html"),
+    path("html/properties/<int:id>/", views.property_detail_html, name="property-detail-html"),
+
+
+    path("html/agents/", views.agent_list_html, name="agent-list-html"),
+    path("html/agents/<int:id>/", views.agent_detail_html, name="agent-detail-html"),
+
+    #klient html
+    path("html/klienci/", views.klient_list_html, name="klient-list-html"),
+    path("html/klienci/dodaj/", views.klient_create_html, name="klient-create-html"),
+    path("html/klienci/search/", views.klient_search_html, name="klient-search-html"),
 ]

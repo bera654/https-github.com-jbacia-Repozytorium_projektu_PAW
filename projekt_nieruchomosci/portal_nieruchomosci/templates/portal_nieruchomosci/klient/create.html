@@ -1,0 +1,39 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Dodaj klienta{% endblock %}
+
+{% block content %}
+<h2>➕ Dodaj nowego klienta</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        <label for="imie">Imię:</label><br>
+        <input type="text" id="imie" name="imie">
+    </p>
+
+    <p>
+        <label for="nazwisko">Nazwisko:</label><br>
+        <input type="text" id="nazwisko" name="nazwisko">
+    </p>
+
+    <p>
+        <label for="plec">Płeć:</label><br>
+        <select id="plec" name="plec">
+            <option value="">-- wybierz --</option>
+            <option value="K">Kobieta</option>
+            <option value="M">Mężczyzna</option>
+            <option value="I">Inna</option>
+        </select>
+    </p>
+
+    <button type="submit" class="btn">Zapisz</button>
+    <a href="{% url 'klient-list-html' %}">Anuluj</a>
+</form>
+
+{% endblock %}

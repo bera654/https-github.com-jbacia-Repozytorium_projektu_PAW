@@ -1,0 +1,30 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}{{ property.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ property.title }}</h2>
+
+<p>Lokalizacja: {{ property.location }}</p>
+<p>Cena: {{ property.price }} EUR</p>
+<p>Metraż: {{ property.square_meters }} m²</p>
+<p>Agent: {{ property.agent }}</p>
+<p>Opis: {{ property.description }}</p>
+
+<h3>Udogodnienia:</h3>
+<ul>
+    {% if property.pool %}<li>Basen</li>{% endif %}
+    {% if property.sauna %}<li>Sauna</li>{% endif %}
+    {% if property.jacuzzi %}<li>Jacuzzi</li>{% endif %}
+    {% if property.lift %}<li>Winda</li>{% endif %}
+    {% if property.garage %}<li>Garaż</li>{% endif %}
+    {% if property.balcony %}<li>Balkon</li>{% endif %}
+    {% if property.terrace %}<li>Taras</li>{% endif %}
+    {% if property.garden %}<li>Ogród</li>{% endif %}
+    {% if property.AC %}<li>Klimatyzacja</li>{% endif %}
+    {% if property.safety_system %}<li>System bezpieczeństwa</li>{% endif %}
+    {% if property.needs_renovation %}<li>Wymaga remontu</li>{% endif %}
+</ul>
+
+<a href="{% url 'property-list-html' %}">← Wróć do listy</a>
+{% endblock %}

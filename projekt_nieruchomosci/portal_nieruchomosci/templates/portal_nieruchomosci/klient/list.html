@@ -1,0 +1,40 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Lista klientów{% endblock %}
+
+{% block content %}
+<h2>👥 Lista klientów</h2>
+
+<p>
+    <a class="btn" href="{% url 'klient-create-html' %}">+ Dodaj nowego klienta</a>
+    <a class="btn" href="{% url 'klient-search-html' %}">🔍 Szukaj klienta</a>
+</p>
+
+
+<table class="simple-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Płeć</th>
+            <th>Data dodania</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for klient in klienci %}
+        <tr>
+            <td>{{ klient.id }}</td>
+            <td>{{ klient.imie }}</td>
+            <td>{{ klient.nazwisko }}</td>
+            <td>{{ klient.plec }}</td>
+            <td>{{ klient.data_dodania }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Brak klientów w bazie.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

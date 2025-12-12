@@ -1,0 +1,12 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}{{ agent.first_name }} {{ agent.last_name }}{% endblock %}
+
+{% block content %}
+<h2>{{ agent.first_name }} {{ agent.last_name }}</h2>
+
+<p>Stanowisko: {{ agent.get_stanowisko_display }}</p>
+<p>Region: {{ agent.region }}</p>
+
+<a href="/html/agents/">← Wróć do listy</a>
+{% endblock %}
