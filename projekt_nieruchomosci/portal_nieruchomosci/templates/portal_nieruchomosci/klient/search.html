@@ -1,0 +1,53 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Szukaj klientów{% endblock %}
+
+{% block content %}
+<h2>🔍 Wyszukiwarka klientów</h2>
+
+<form method="get" action="{% url 'klient-search-html' %}">
+    <label for="q">Fragment nazwiska:</label>
+    <input type="text" id="q" name="q" value="{{ query }}">
+    <button type="submit" class="btn">Szukaj</button>
+</form>
+
+<hr>
+
+{% if query %}
+    <p>Wyniki dla: <strong>{{ query }}</strong></p>
+{% endif %}
+
+<table class="simple-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Płeć</th>
+            <th>Data dodania</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for klient in klienci %}
+        <tr>
+            <td>{{ klient.id }}</td>
+            <td>{{ klient.imie }}</td>
+            <td>{{ klient.nazwisko }}</td>
+            <td>{{ klient.plec }}</td>
+            <td>{{ klient.data_dodania }}</td>
+        </tr>
+        {% empty %}
+        {% if query %}
+        <tr>
+            <td colspan="5">Brak wyników dla podanego zapytania.</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">Wpisz fragment nazwiska i kliknij „Szukaj”.</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

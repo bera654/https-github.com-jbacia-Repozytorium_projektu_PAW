@@ -1,0 +1,24 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}{{ agent.first_name }} {{ agent.last_name }}{% endblock %}
+
+{% block content %}
+<h2>{{ agent.first_name }} {{ agent.last_name }}</h2>
+
+<p>Stanowisko: {{ agent.get_stanowisko_display }}</p>
+<p>Region: {{ agent.region }}</p>
+
+<a class="btn-tertiary" href="{% url 'agent-update-html' agent.id %}">
+   Edytuj agenta
+</a>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit"
+            onclick="return confirm('Czy na pewno chcesz usunąć tego agenta?');">
+        Usuń agenta
+    </button>
+</form>
+<a href="{% url 'agent-list-html' %}">← Wróć do listy</a>
+
+{% endblock %}

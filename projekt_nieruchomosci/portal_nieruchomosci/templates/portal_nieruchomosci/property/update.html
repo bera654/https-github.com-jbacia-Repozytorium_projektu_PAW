@@ -1,0 +1,57 @@
+{% extends "portal_nieruchomosci/base.html" %}
+{% block title %}Edytuj ofertę{% endblock %}
+
+{% block content %}
+<h2> Edytuj ofertę</h2>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label>Tytuł</label><br>
+    <input type="text" name="title" value="{{ property.title }}">
+  </p>
+
+  <p>
+    <label>Lokalizacja</label><br>
+    <input type="text" name="location" value="{{ property.location }}">
+  </p>
+
+  <p>
+    <label>Cena (EUR)</label><br>
+    <input type="number" step="0.01" name="price" value="{{ property.price }}">
+  </p>
+
+  <p>
+    <label>Metraż (m²)</label><br>
+    <input type="number" step="0.01" name="square_meters" value="{{ property.square_meters }}">
+  </p>
+
+  <p>
+    <label>Opis</label><br>
+    <textarea name="description" rows="5">{{ property.description }}</textarea>
+  </p>
+
+  <h3>Udogodnienia</h3>
+  <p>
+    <label><input type="checkbox" name="pool" {% if property.pool %}checked{% endif %}> Basen</label><br>
+    <label><input type="checkbox" name="sauna" {% if property.sauna %}checked{% endif %}> Sauna</label><br>
+    <label><input type="checkbox" name="jacuzzi" {% if property.jacuzzi %}checked{% endif %}> Jacuzzi</label><br>
+    <label><input type="checkbox" name="lift" {% if property.lift %}checked{% endif %}> Winda</label><br>
+    <label><input type="checkbox" name="garage" {% if property.garage %}checked{% endif %}> Garaż</label><br>
+    <label><input type="checkbox" name="balcony" {% if property.balcony %}checked{% endif %}> Balkon</label><br>
+    <label><input type="checkbox" name="terrace" {% if property.terrace %}checked{% endif %}> Taras</label><br>
+    <label><input type="checkbox" name="garden" {% if property.garden %}checked{% endif %}> Ogród</label><br>
+    <label><input type="checkbox" name="AC" {% if property.AC %}checked{% endif %}> Klimatyzacja</label><br>
+    <label><input type="checkbox" name="safety_system" {% if property.safety_system %}checked{% endif %}> System bezpieczeństwa</label><br>
+    <label><input type="checkbox" name="needs_renovation" {% if property.needs_renovation %}checked{% endif %}> Wymaga remontu</label>
+  </p>
+
+  <button type="submit" class="btn">Zapisz zmiany</button>
+  <a class="btn-tertiary" href="{% url 'property-detail-html' property.id %}">Anuluj</a>
+</form>
+{% endblock %}
