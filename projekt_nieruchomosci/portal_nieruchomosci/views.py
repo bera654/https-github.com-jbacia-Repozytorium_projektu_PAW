@@ -6,31 +6,40 @@ from rest_framework import status
 from .models import Klient, Agent
 from .serializers import KlientSerializer, AgentSerializer
 
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+
 
 
 
 @api_view(["GET", "POST"])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def klient_list(request):
 
-    
     if request.method == "GET":
-        klienci = Klient.objects.all()
+        klienci = Klient.objects.filter(wlasciciel=request.user)
         serializer = KlientSerializer(klienci, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == "POST":
         serializer = KlientSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(wlasciciel=request.user)  # <-- klucz
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 @api_view(["GET", "PUT", "DELETE"])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 def klient_detail(request, pk):
     
     try:
-        klient = Klient.objects.get(pk=pk)
+        klient = get_object_or_404(Klient, pk=pk, wlasciciel=request.user)
     except Klient.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

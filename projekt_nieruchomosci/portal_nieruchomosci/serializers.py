@@ -175,6 +175,7 @@ class KlientSerializer(serializers.Serializer):
 
    
     data_dodania = serializers.DateField(read_only=True)
+    wlasciciel = serializers.ReadOnlyField(source="wlasciciel.username")
 
     def create(self, validated_data):
         return Klient.objects.create(**validated_data)
@@ -185,4 +186,7 @@ class KlientSerializer(serializers.Serializer):
         instance.plec = validated_data.get("plec", instance.plec)
         instance.save()
         return instance
+    
+    
+
 
