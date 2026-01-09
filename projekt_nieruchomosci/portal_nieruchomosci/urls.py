@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     #klient
     path("klienci/", views.klient_list, name="klient-list"),
@@ -46,6 +47,9 @@ urlpatterns = [
     path("html/klienci/search/", views.klient_search_html, name="klient-search-html"),
     path("html/klienci/<int:id>/", views.klient_detail_html, name="klient-detail-html"),
     path("html/klienci/<int:id>/edytuj/",views.klient_update_html,name="klient-update-html"),
+
+    
+
 
 
 ]

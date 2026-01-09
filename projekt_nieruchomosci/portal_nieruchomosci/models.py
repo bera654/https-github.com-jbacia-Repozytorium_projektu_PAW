@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Lista wyboru miesięcy dodania oferty
 MONTHS = models.IntegerChoices(
@@ -117,6 +119,14 @@ class Klient(models.Model):
     nazwisko = models.CharField(max_length=100, blank=False, null=False)
     plec = models.CharField(max_length=1, choices=PLEC_WYBOR, default="I")
     data_dodania = models.DateField(auto_now_add=True, editable=False) #kiedy zarejestrował się w serwisie
+    wlasciciel = models.ForeignKey(
+    User,
+    on_delete=models.CASCADE,
+    related_name="klienci",
+    null=True,
+    blank=True
+)
+
 
 
 
