@@ -1,0 +1,30 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}{{ type.name }}{% endblock %}
+
+{% block content %}
+<h2>Szczegóły typu: {{ type.name }}</h2>
+
+<p><strong>Nazwa:</strong> {{ type.name }}</p>
+<p><strong>Opis:</strong> {{ type.description|default:"—" }}</p>
+<p><strong>Typowe cechy:</strong> {{ type.typical_features|default:"—" }}</p>
+<p><strong>Mieszkalna?:</strong> {% if type.is_residential %}Tak{% else %}Nie{% endif %}</p>
+<p><strong>Ranking:</strong> {{ type.popularity_rank }}</p>
+
+<a class="btn-tertiary" href="{% url 'propertytype-update-html' type.id %}">
+  Edytuj typ
+</a>
+
+<form method="post" style="margin-top: 12px;">
+  {% csrf_token %}
+  <button type="submit"
+          onclick="return confirm('Czy na pewno chcesz usunąć ten typ nieruchomości?');">
+    Usuń typ
+  </button>
+</form>
+
+<p style="margin-top: 16px;">
+  <a href="{% url 'propertytype-list-html' %}">← Wróć do listy</a>
+</p>
+
+{% endblock %}

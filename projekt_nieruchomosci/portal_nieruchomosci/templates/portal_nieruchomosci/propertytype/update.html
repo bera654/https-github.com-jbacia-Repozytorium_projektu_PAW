@@ -1,0 +1,46 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Edytuj typ{% endblock %}
+
+{% block content %}
+<h2> Edytuj typ: {{ type.name }}</h2>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label>Nazwa *</label><br>
+    <input type="text" name="name" value="{{ type.name }}">
+  </p>
+
+  <p>
+    <label>Opis</label><br>
+    <textarea name="description" rows="4">{{ type.description }}</textarea>
+  </p>
+
+  <p>
+    <label>Typowe cechy</label><br>
+    <input type="text" name="typical_features" value="{{ type.typical_features }}">
+  </p>
+
+  <p>
+    <label>
+      <input type="checkbox" name="is_residential" {% if type.is_residential %}checked{% endif %}>
+      Czy mieszkalna?
+    </label>
+  </p>
+
+  <p>
+    <label>Ranking popularności (0–10)</label><br>
+    <input type="number" name="popularity_rank" min="0" max="10" value="{{ type.popularity_rank }}">
+  </p>
+
+  <button type="submit" class="btn">Zapisz zmiany</button>
+  <a class="btn-tertiary" href="{% url 'propertytype-detail-html' type.id %}">Anuluj</a>
+</form>
+
+{% endblock %}

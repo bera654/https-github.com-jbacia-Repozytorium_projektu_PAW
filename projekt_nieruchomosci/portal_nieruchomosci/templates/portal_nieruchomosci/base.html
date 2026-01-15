@@ -5,11 +5,10 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} | Portal Nieruchomości</title>
 
-    <!-- Podpięcie głównego stylu -->
+    
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
-        /* Minimalna baza stylów, żeby wyglądało ładnie nawet bez CSS */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -53,7 +52,6 @@
         nav a:hover {
             text-decoration: underline;
         }
-
     </style>
 </head>
 
@@ -67,6 +65,7 @@
         <a href="{% url 'property-list-html' %}">Oferty</a>
         <a href="{% url 'agent-list-html' %}">Agenci</a>
         <a href="{% url 'klient-list-html' %}">Klienci</a>
+        <a href="{% url 'propertytype-list-html' %}">Typy nieruchomości</a>
     </nav>
 
     <div id="content">
@@ -75,7 +74,7 @@
     </div>
 
     <div id="footer">
-        <p>© 2025 Portal Nieruchomości — Wszelkie prawa zastrzeżone</p>
+        <p>© Berulia Portal Nieruchomości SWPS PAW 2025/26</p>
     </div>
 
 </body>

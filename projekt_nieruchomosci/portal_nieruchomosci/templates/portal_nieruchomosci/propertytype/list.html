@@ -1,0 +1,43 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Typy nieruchomości{% endblock %}
+
+{% block content %}
+<h2>Typy nieruchomości</h2>
+
+<p>
+  <a class="btn" href="{% url 'propertytype-create-html' %}">+ Dodaj typ</a>
+</p>
+
+<table class="simple-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nazwa</th>
+      <th>Mieszkalna?</th>
+      <th>Ranking</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in types %}
+      <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.name }}</td>
+        <td>{% if t.is_residential %}Tak{% else %}Nie{% endif %}</td>
+        <td>{{ t.popularity_rank }}</td>
+        <td>
+          <a class="btn-tertiary" href="{% url 'propertytype-detail-html' t.id %}">
+            Szczegóły
+          </a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="5">Brak typów w bazie.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

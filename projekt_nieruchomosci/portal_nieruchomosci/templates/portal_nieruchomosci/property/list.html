@@ -6,6 +6,10 @@
 <h2 class="page-title"> Dostępne nieruchomości</h2>
 
 <div class="property-grid">
+    <p>
+        <a class="btn" href="{% url 'property-create-html' %}">+ Dodaj ofertę</a>
+    </p>
+
 
     {% for property in properties %}
     <div class="property-card">

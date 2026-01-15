@@ -4,8 +4,13 @@
 
 {% block content %}
 <h2>Lista agentów</h2>
-
+    
+    <p>
+        <a class="btn" href="{% url 'agent-create-html' %}">+ Dodaj agenta</a>
+    </p>
 {% for a in agents %}
+
+
     <p>
         <strong>{{ a.first_name }} {{ a.last_name }}</strong><br>
         Stanowisko: {{ a.get_stanowisko_display }}<br>
