@@ -8,9 +8,9 @@ from .models import (
     TRANSACTION_TYPES,
 )
 
+from .models import PropertyType
 
 class PropertyTypeSerializer(serializers.Serializer):
-    """Serializer dla modelu PropertyType."""
 
     id = serializers.IntegerField(read_only=True)
 

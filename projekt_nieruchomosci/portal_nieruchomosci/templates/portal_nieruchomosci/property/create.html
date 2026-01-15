@@ -1,0 +1,79 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Dodaj ofertę{% endblock %}
+
+{% block content %}
+<h2>➕ Dodaj ofertę</h2>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label>Tytuł *</label><br>
+    <input type="text" name="title">
+  </p>
+
+  <p>
+    <label>Lokalizacja *</label><br>
+    <input type="text" name="location">
+  </p>
+
+  <p>
+    <label>Cena (EUR) *</label><br>
+    <input type="number" step="0.01" name="price">
+  </p>
+
+  <p>
+    <label>Metraż (m²) *</label><br>
+    <input type="number" step="0.01" name="square_meters">
+  </p>
+
+  <p>
+    <label>Opis</label><br>
+    <textarea name="description" rows="5"></textarea>
+  </p>
+
+  <p>
+    <label>Agent</label><br>
+    <select name="agent">
+      <option value="">— brak —</option>
+      {% for a in agents %}
+        <option value="{{ a.id }}">{{ a.first_name }} {{ a.last_name }}</option>
+      {% endfor %}
+    </select>
+  </p>
+
+  <p>
+    <label>Typ nieruchomości</label><br>
+    <select name="property_type">
+      <option value="">— brak —</option>
+      {% for t in types %}
+        <option value="{{ t.id }}">{{ t.name }}</option>
+      {% endfor %}
+    </select>
+  </p>
+
+  <h3>Udogodnienia</h3>
+  <p>
+    <label><input type="checkbox" name="pool"> Basen</label><br>
+    <label><input type="checkbox" name="sauna"> Sauna</label><br>
+    <label><input type="checkbox" name="jacuzzi"> Jacuzzi</label><br>
+    <label><input type="checkbox" name="lift"> Winda</label><br>
+    <label><input type="checkbox" name="garage"> Garaż</label><br>
+    <label><input type="checkbox" name="balcony"> Balkon</label><br>
+    <label><input type="checkbox" name="terrace"> Taras</label><br>
+    <label><input type="checkbox" name="garden"> Ogród</label><br>
+    <label><input type="checkbox" name="AC"> Klimatyzacja</label><br>
+    <label><input type="checkbox" name="safety_system"> System bezpieczeństwa</label><br>
+    <label><input type="checkbox" name="needs_renovation"> Wymaga remontu</label>
+  </p>
+
+  <button type="submit" class="btn">Zapisz</button>
+  <a class="btn-tertiary" href="{% url 'property-list-html' %}">Anuluj</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Dodaj typ nieruchomości{% endblock %}
+
+{% block content %}
+<h2>➕ Dodaj typ nieruchomości</h2>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label>Nazwa *</label><br>
+    <input type="text" name="name">
+  </p>
+
+  <p>
+    <label>Opis</label><br>
+    <textarea name="description" rows="4"></textarea>
+  </p>
+
+  <p>
+    <label>Typowe cechy</label><br>
+    <input type="text" name="typical_features" placeholder="np. balkon, winda, ogród">
+  </p>
+
+  <p>
+    <label>
+      <input type="checkbox" name="is_residential" checked>
+      Czy mieszkalna?
+    </label>
+  </p>
+
+  <p>
+    <label>Ranking popularności (0–10)</label><br>
+    <input type="number" name="popularity_rank" min="0" max="10" value="0">
+  </p>
+
+  <button type="submit" class="btn">Zapisz</button>
+  <a class="btn-tertiary" href="{% url 'propertytype-list-html' %}">Anuluj</a>
+</form>
+
+{% endblock %}

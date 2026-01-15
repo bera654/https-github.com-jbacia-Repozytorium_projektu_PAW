@@ -1,0 +1,44 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block title %}Dodaj agenta{% endblock %}
+
+{% block content %}
+<h2>➕ Dodaj agenta</h2>
+
+{% if error %}
+  <p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    <label>Imię *</label><br>
+    <input type="text" name="first_name">
+  </p>
+
+  <p>
+    <label>Nazwisko *</label><br>
+    <input type="text" name="last_name">
+  </p>
+
+  <p>
+    <label>Region *</label><br>
+    <input type="text" name="region" maxlength="2" placeholder="np. PL">
+  </p>
+
+  <p>
+    <label>Stanowisko *</label><br>
+    <select name="stanowisko">
+      <option value="">-- wybierz --</option>
+      <option value="A">Agent nieruchomości</option>
+      <option value="D">Doradca sprzedaży</option>
+      <option value="O">Osoba prywatna</option>
+      <option value="F">Firma</option>
+    </select>
+  </p>
+
+  <button type="submit" class="btn">Zapisz</button>
+  <a class="btn-tertiary" href="{% url 'agent-list-html' %}">Anuluj</a>
+</form>
+{% endblock %}
