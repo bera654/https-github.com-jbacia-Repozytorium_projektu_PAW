@@ -44,7 +44,7 @@ class AgentSerializer(serializers.Serializer):
     
     stanowisko = serializers.ChoiceField(
         choices=Agent.Stanowisko,
-        default=Agent.Stanowisko[0][0]  # np. 'A'
+        default=Agent.Stanowisko[0][0]  
     )
 
     region = serializers.CharField(required=True, max_length=2)
@@ -71,13 +71,13 @@ class PropertySerializer(serializers.Serializer):
   
     listing_month = serializers.ChoiceField(
         choices=MONTHS.choices,
-        default=MONTHS.choices[0][0]  # pierwszy miesiąc z listy
+        default=MONTHS.choices[0][0]  
     )
 
    
     transaction_type = serializers.ChoiceField(
         choices=TRANSACTION_TYPES,
-        default=TRANSACTION_TYPES[0][0]  # 'S'
+        default=TRANSACTION_TYPES[0][0]  
     )
 
     
@@ -170,7 +170,7 @@ class KlientSerializer(serializers.Serializer):
 
     plec = serializers.ChoiceField(
         choices=Klient.PLEC_WYBOR,
-        default=Klient.PLEC_WYBOR[2][0]  # 'I' – Inna
+        default=Klient.PLEC_WYBOR[2][0]  
     )
 
    

@@ -4,11 +4,11 @@
 
 {% block content %}
 <h2>Typy nieruchomości</h2>
-
+{% if request.user.is_superuser %}
 <p>
   <a class="btn" href="{% url 'propertytype-create-html' %}">+ Dodaj typ</a>
 </p>
-
+{% endif %}
 <table class="simple-table">
   <thead>
     <tr>

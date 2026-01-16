@@ -15,7 +15,6 @@ TRANSACTION_TYPES = (
 )
 
 class PropertyType(models.Model):
-    """Model reprezentujący typ nieruchomości (np. mieszkanie, dom, działka)."""
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, help_text="Krótki opis rodzaju nieruchomości.")
     typical_features = models.CharField(
@@ -36,7 +35,6 @@ class PropertyType(models.Model):
 
 
 class Agent(models.Model):
-    """Model reprezentujący agenta nieruchomości."""
     Stanowisko = (
     ('A', 'Agent nieruchomości'),
     ('D', 'Doradca sprzeday'),
@@ -56,19 +54,20 @@ class Agent(models.Model):
 
 
 class Property(models.Model):
-    """Model reprezentujący nieruchomość w portalu."""
     title = models.CharField(max_length=100)
     listing_month = models.IntegerField(choices=MONTHS.choices, default=MONTHS.Styczeń)
     transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPES, default='S')
     agent = models.ForeignKey(Agent, null=True, blank=True, on_delete=models.SET_NULL)
     property_type = models.ForeignKey(PropertyType, null=True, blank=True, on_delete=models.SET_NULL)
     available_units = models.PositiveIntegerField(default=1, help_text="Liczba pokoi")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, help_text="Użytkownik (Agent), który dodał ofertę")
     square_meters = models.DecimalField(
         max_digits=6,
         decimal_places=2,
         help_text="Metraż w m²",
         null=True,
         blank=True
+    
     )
 
     price = models.DecimalField(
@@ -109,7 +108,6 @@ class Property(models.Model):
 
 
 class Klient(models.Model):
-    """Model reprezentujący osobę (klienta portalu)."""
     PLEC_WYBOR = (
         ("K", "Kobieta"),
         ("M", "Mężczyzna"),
@@ -119,16 +117,7 @@ class Klient(models.Model):
     nazwisko = models.CharField(max_length=100, blank=False, null=False)
     plec = models.CharField(max_length=1, choices=PLEC_WYBOR, default="I")
     data_dodania = models.DateField(auto_now_add=True, editable=False) #kiedy zarejestrował się w serwisie
-    wlasciciel = models.ForeignKey(
-    User,
-    on_delete=models.CASCADE,
-    related_name="klienci",
-    null=True,
-    blank=True
-)
-
-
-
+    agenci = models.ManyToManyField(User, related_name="klienci", blank=True) 
 
 
     def __str__(self):
