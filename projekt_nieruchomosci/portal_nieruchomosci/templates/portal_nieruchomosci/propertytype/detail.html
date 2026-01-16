@@ -11,6 +11,7 @@
 <p><strong>Mieszkalna?:</strong> {% if type.is_residential %}Tak{% else %}Nie{% endif %}</p>
 <p><strong>Ranking:</strong> {{ type.popularity_rank }}</p>
 
+{% if request.user.is_superuser %}
 <a class="btn-tertiary" href="{% url 'propertytype-update-html' type.id %}">
   Edytuj typ
 </a>
@@ -22,7 +23,7 @@
     Usuń typ
   </button>
 </form>
-
+{% endif %}
 <p style="margin-top: 16px;">
   <a href="{% url 'propertytype-list-html' %}">← Wróć do listy</a>
 </p>

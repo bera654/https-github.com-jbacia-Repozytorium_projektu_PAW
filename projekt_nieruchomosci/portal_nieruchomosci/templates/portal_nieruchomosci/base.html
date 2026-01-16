@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} | Portal Nieruchomości</title>
 
-    
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
@@ -40,6 +39,10 @@
             background: #1f3faa;
             padding: 10px;
             text-align: center;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         nav a {
@@ -51,6 +54,14 @@
 
         nav a:hover {
             text-decoration: underline;
+        }
+
+        .user-info {
+            color: #a5d5ff;
+            font-size: 0.9em;
+            margin-left: 20px;
+            border-left: 1px solid #ffffff50;
+            padding-left: 20px;
         }
     </style>
 </head>
@@ -64,9 +75,22 @@
     <nav>
         <a href="{% url 'property-list-html' %}">Oferty</a>
         <a href="{% url 'agent-list-html' %}">Agenci</a>
+        {% if request.user.is_superuser %}
         <a href="{% url 'klient-list-html' %}">Klienci</a>
+        {% endif %}
         <a href="{% url 'propertytype-list-html' %}">Typy nieruchomości</a>
-    </nav>
+
+        {% if request.user.is_authenticated %}
+            <span class="user-info">
+                Witaj, <strong>{{ request.user.username }}</strong>!
+            </span>
+            <a href="{% url 'user-logout' %}" style="color: #ffbdbd;">(Wyloguj)</a>
+        {% else %}
+            <span class="user-info" style="border: none;">
+                <a href="{% url 'user-login' %}" style="color: #fff;"> Zaloguj się</a>
+            </span>
+        {% endif %}
+        </nav>
 
     <div id="content">
         {% block content %}

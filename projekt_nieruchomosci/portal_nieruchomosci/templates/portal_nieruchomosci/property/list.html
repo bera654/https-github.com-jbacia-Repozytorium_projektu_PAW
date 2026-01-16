@@ -3,41 +3,36 @@
 {% block title %}Lista ofert{% endblock %}
 
 {% block content %}
-<h2 class="page-title"> Dostępne nieruchomości</h2>
+<h2 class="page-title">Dostępne nieruchomości</h2>
 
 <div class="property-grid">
-    <p>
-        <a class="btn" href="{% url 'property-create-html' %}">+ Dodaj ofertę</a>
-    </p>
 
+    {% if request.user.is_superuser %}
+        <p>
+            <a class="btn" href="{% url 'property-create-html' %}">+ Dodaj ofertę</a>
+        </p>
+    {% endif %}
 
     {% for property in properties %}
     <div class="property-card">
-
-        <!-- Nagłówek -->
+        
         <div class="property-card-header">
             <h3>{{ property.title }}</h3>
         </div>
-
-        <!-- Informacje główne -->
+        
         <div class="property-card-body">
-            <p><strong> Lokalizacja:</strong> {{ property.location }}</p>
-            <p><strong> Metraż:</strong> {{ property.square_meters }} m²</p>
-            <p><strong> Cena:</strong> {{ property.price }} EUR</p>
-
-            <!-- Ikonki udogodnień -->
+            <p><strong>Lokalizacja:</strong> {{ property.location }}</p>
+            <p><strong>Metraż:</strong> {{ property.square_meters }} m²</p>
+            <p><strong>Cena:</strong> {{ property.price }} EUR</p>
+            
             <div class="features">
-                {% if property.pool %}<span class="tag">🏊 Basen</span>{% endif %}
-                {% if property.sauna %}<span class="tag">🔥 Sauna</span>{% endif %}
-                {% if property.jacuzzi %}<span class="tag">🛁 Jacuzzi</span>{% endif %}
-                {% if property.AC %}<span class="tag">❄️ Klimatyzacja</span>{% endif %}
-                {% if property.garden %}<span class="tag">🌿 Ogród</span>{% endif %}
-                {% if property.garage %}<span class="tag">🚗 Garaż</span>{% endif %}
-                {% if property.lift %}<span class="tag">⬆️ Winda</span>{% endif %}
+                {% if property.pool %}<span class="tag"> Basen</span>{% endif %}
+                {% if property.sauna %}<span class="tag"> Sauna</span>{% endif %}
+                {% if property.garage %}<span class="tag"> Garaż</span>{% endif %}
+                {% if property.garden %}<span class="tag"> Ogród</span>{% endif %}
             </div>
         </div>
-
-        <!-- Stopka -->
+        
         <div class="property-card-footer">
             <a class="btn" href="{% url 'property-detail-html' property.id %}">
                 Szczegóły →
@@ -45,8 +40,7 @@
         </div>
 
     </div>
-    {% endfor %}
-
-</div>
+    {% endfor %} 
+    </div>
 
 {% endblock %}

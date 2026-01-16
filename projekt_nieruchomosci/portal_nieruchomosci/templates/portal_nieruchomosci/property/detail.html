@@ -25,20 +25,26 @@
     {% if property.safety_system %}<li>System bezpieczeństwa</li>{% endif %}
     {% if property.needs_renovation %}<li>Wymaga remontu</li>{% endif %}
 </ul>
-<a class="btn-tertiary" href="{% url 'property-update-html' property.id %}">
-  Edytuj ofertę
-</a>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit"
-            onclick="return confirm('Czy na pewno chcesz usunąć tę nieruchomość?');">
-        Usuń ofertę
-    </button>
-</form>
+{% if request.user.is_superuser %}
+    <div style="margin-top: 20px; margin-bottom: 20px; padding-top: 15px; border-top: 1px solid #ddd;">
+        
+        <a class="btn-tertiary" href="{% url 'property-update-html' property.id %}">
+            Edytuj ofertę
+        </a>
 
+        <form method="post" style="display:inline; margin-left: 10px;">
+            {% csrf_token %}
+            <button type="submit" class="btn" style="background-color: #d33030; border: none; color: white;"
+                    onclick="return confirm('Czy na pewno chcesz usunąć tę nieruchomość?');">
+                 Usuń ofertę
+            </button>
+        </form>
+        
+    </div>
+{% endif %}
+<p>
+    <a href="{% url 'property-list-html' %}">← Wróć do listy</a>
+</p>
 
-<a href="{% url 'property-list-html' %}">← Wróć do listy</a>
 {% endblock %}
-
-

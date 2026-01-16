@@ -17,10 +17,10 @@ from .serializers import (
     PropertyTypeSerializer,
     PropertySerializer,
 )
-
-# =========================================================
-# KLIENT API (LAB 9 - rozbite)
-# =========================================================
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Q 
+from django.http import HttpResponseForbidden 
 
 @api_view(["GET", "POST"])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
@@ -81,9 +81,7 @@ def klient_search(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# =========================================================
-# AGENT API
-# =========================================================
+
 
 @api_view(["GET", "POST"])
 def agent_list(request):
@@ -113,9 +111,7 @@ def agent_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# =========================================================
-# PROPERTY TYPE API
-# =========================================================
+
 
 @api_view(["GET", "POST"])
 def propertytype_list(request):
@@ -160,7 +156,7 @@ def propertytype_search(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# ✅ Zadanie 5 / “members” analog — token-only, read-only
+
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -171,9 +167,7 @@ def propertytype_properties(request, pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# =========================================================
-# PROPERTY API
-# =========================================================
+
 
 @api_view(["GET", "POST"])
 def property_list(request):
@@ -218,9 +212,6 @@ def property_search(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# =========================================================
-# HTML VIEWS
-# =========================================================
 
 def property_list_html(request):
     properties = Property.objects.all()
@@ -229,12 +220,17 @@ def property_list_html(request):
 
 def property_detail_html(request, id):
     property_obj = get_object_or_404(Property, id=id)
+    
     if request.method == "POST":
+        if not request.user.is_superuser:
+            return render(request, "portal_nieruchomosci/login.html", {"error": "Brak uprawnień!"})
+        
         property_obj.delete()
         return redirect("property-list-html")
+        
     return render(request, "portal_nieruchomosci/property/detail.html", {"property": property_obj})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def property_update_html(request, id):
     property_obj = get_object_or_404(Property, id=id)
 
@@ -279,12 +275,17 @@ def agent_list_html(request):
 
 def agent_detail_html(request, id):
     agent = get_object_or_404(Agent, id=id)
+    
     if request.method == "POST":
+        if not request.user.is_superuser:
+            return render(request, "portal_nieruchomosci/login.html", {"error": "Brak uprawnień!"})
+
         agent.delete()
         return redirect("agent-list-html")
+        
     return render(request, "portal_nieruchomosci/agent/detail.html", {"agent": agent})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def agent_update_html(request, id):
     agent = get_object_or_404(Agent, id=id)
 
@@ -304,12 +305,12 @@ def agent_update_html(request, id):
         agent.save()
         return redirect("agent-detail-html", id=agent.id)
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def klient_list_html(request):
     klienci = Klient.objects.all()
     return render(request, "portal_nieruchomosci/klient/list.html", {"klienci": klienci})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def klient_create_html(request):
     if request.method == "GET":
         return render(request, "portal_nieruchomosci/klient/create.html", {})
@@ -326,7 +327,7 @@ def klient_create_html(request):
         Klient.objects.create(imie=imie, nazwisko=nazwisko, plec=plec)
         return redirect("klient-list-html")
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def klient_search_html(request):
     query = request.GET.get("q", "")
     if query:
@@ -335,7 +336,7 @@ def klient_search_html(request):
         klienci = Klient.objects.none()
     return render(request, "portal_nieruchomosci/klient/search.html", {"klienci": klienci, "query": query})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def klient_detail_html(request, id):
     klient = get_object_or_404(Klient, id=id)
     if request.method == "POST":
@@ -343,7 +344,7 @@ def klient_detail_html(request, id):
         return redirect("klient-list-html")
     return render(request, "portal_nieruchomosci/klient/detail.html", {"klient": klient})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def klient_update_html(request, id):
     klient = get_object_or_404(Klient, id=id)
 
@@ -367,7 +368,7 @@ def propertytype_list_html(request):
     types = PropertyType.objects.all()
     return render(request, "portal_nieruchomosci/propertytype/list.html", {"types": types})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def propertytype_create_html(request):
     if request.method == "GET":
         return render(request, "portal_nieruchomosci/propertytype/create.html", {})
@@ -400,12 +401,16 @@ def propertytype_create_html(request):
 
 def propertytype_detail_html(request, id):
     pt = get_object_or_404(PropertyType, id=id)
+    
     if request.method == "POST":
+        if not request.user.is_superuser:
+            return render(request, "portal_nieruchomosci/login.html", {"error": "Tylko administrator może usuwać typy nieruchomości!"})
         pt.delete()
         return redirect("propertytype-list-html")
+        
     return render(request, "portal_nieruchomosci/propertytype/detail.html", {"type": pt})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def propertytype_update_html(request, id):
     pt = get_object_or_404(PropertyType, id=id)
 
@@ -431,7 +436,7 @@ def propertytype_update_html(request, id):
         pt.save()
         return redirect("propertytype-detail-html", id=pt.id)
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def agent_create_html(request):
     if request.method == "GET":
         return render(request, "portal_nieruchomosci/agent/create.html", {})
@@ -449,7 +454,7 @@ def agent_create_html(request):
         Agent.objects.create(first_name=first_name, last_name=last_name, region=region, stanowisko=stanowisko)
         return redirect("agent-list-html")
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='user-login')
 def property_create_html(request):
     agents = Agent.objects.all()
     types = PropertyType.objects.all()
@@ -507,3 +512,22 @@ def property_create_html(request):
             needs_renovation=needs_renovation,
         )
         return redirect("property-list-html")
+
+
+
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('klient-list-html') 
+        else:
+            return render(request, 'portal_nieruchomosci/login.html', {'error': 'Nieprawidłowe dane'})
+    return render(request, 'portal_nieruchomosci/login.html')
+
+def user_logout(request):
+    logout(request)
+    return redirect('user-login')
