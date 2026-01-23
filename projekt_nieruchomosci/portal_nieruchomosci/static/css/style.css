@@ -1,4 +1,4 @@
-/* Karty nieruchomości — styl Airbnb/Otodom */
+
 
 .property-grid {
     display: grid;
@@ -61,13 +61,13 @@
 .btn:hover {
     background: #2e63db;
 }
-/* Główny tytuł strony */
+
 .page-title {
     margin-bottom: 25px;
     font-size: 28px;
 }
 
-/* Układ kafelków */
+
 .property-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -75,7 +75,7 @@
     margin-top: 20px;
 }
 
-/* Pojedyncza karta */
+
 .property-card {
     background: white;
     border-radius: 14px;
@@ -92,13 +92,13 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* Nagłówek karty */
+
 .property-card-header h3 {
     margin: 0;
     font-size: 22px;
 }
 
-/* Tag / cecha nieruchomości */
+
 .tag {
     background: #e8f1ff;
     padding: 6px 10px;
@@ -110,7 +110,7 @@
     border: 1px solid #bcd3ff;
 }
 
-/* Stopka z linkiem */
+
 .property-card-footer {
     margin-top: auto;
     padding-top: 15px;

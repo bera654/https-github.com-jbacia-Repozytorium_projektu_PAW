@@ -34,7 +34,6 @@ class PropertyTypeSerializer(serializers.Serializer):
 
 
 class AgentSerializer(serializers.Serializer):
-    """Serializer dla modelu Agent."""
 
     id = serializers.IntegerField(read_only=True)
 
@@ -62,7 +61,6 @@ class AgentSerializer(serializers.Serializer):
 
 
 class PropertySerializer(serializers.Serializer):
-    """Serializer dla modelu Property."""
 
     id = serializers.IntegerField(read_only=True)
 
