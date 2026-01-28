@@ -1,0 +1,31 @@
+{% extends "portal_nieruchomosci/base.html" %}
+{% block content %}
+<h2> Moi Klienci</h2>
+
+<table class="simple-table">
+    <tr><th>Imię i Nazwisko</th><th>Płeć</th></tr>
+    {% for k in moj_klienci %}
+    <tr>
+        <td>{{ k.imie }} {{ k.nazwisko }}</td>
+        <td>{{ k.plec }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">Nie masz przypisanych klientów.</td></tr>
+    {% endfor %}
+</table>
+
+<h3 style="margin-top:40px;"> Wolni klienci (do wzięcia)</h3>
+<table class="simple-table">
+    {% for k in wolni_klienci %}
+    <tr>
+        <td>{{ k.imie }} {{ k.nazwisko }}</td>
+        <td>
+            <form method="post" action="{% url 'przypisz-klienta' k.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Przypisz do mnie</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

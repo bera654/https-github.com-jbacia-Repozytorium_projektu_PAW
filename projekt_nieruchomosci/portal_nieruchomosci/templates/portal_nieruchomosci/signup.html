@@ -1,0 +1,51 @@
+{% extends "portal_nieruchomosci/base.html" %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+    <h2 style="text-align: center;">Rejestracja</h2>
+    
+    {% if error %}
+        <div style="color: red; text-align: center; margin-bottom: 15px;">{{ error }}</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <label>Login:</label>
+        <input type="text" name="username" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+
+        <label>Imię:</label>
+        <input type="text" name="imie" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+
+        <label>Nazwisko:</label>
+        <input type="text" name="nazwisko" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+        <label>Hasło:</label>
+        <input type="password" name="pass1" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+
+        <label>Powtórz hasło:</label>
+        <input type="password" name="pass2" required style="width: 100%; margin-bottom: 20px; padding: 8px;">
+
+        <div style="background-color: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <p style="margin-top: 0; font-weight: bold;">Typ konta:</p>
+            
+            <label style="display: block; margin-bottom: 5px; cursor: pointer;">
+                <input type="radio" name="role" value="client" checked> 
+                Szukam nieruchomości (Klient)
+            </label>
+            
+            <label style="display: block; cursor: pointer;">
+                <input type="radio" name="role" value="agent"> 
+                Jestem Agentem
+            </label>
+        </div>
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Zarejestruj się
+        </button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 15px;">
+        <a href="{% url 'user-login' %}">Wróć do logowania</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "portal_nieruchomosci/base.html" %}
+{% block content %}
+<h2>Moje Oferty Nieruchomości</h2>
+<a href="{% url 'property-create-html' %}" class="btn">+ Dodaj nową ofertę</a>
+
+<div class="property-grid">
+    {% for property in properties %}
+    <div class="property-card">
+        <div class="property-card-header"><h3>{{ property.title }}</h3></div>
+        <div class="property-card-body">
+            <p>{{ property.location }} | {{ property.price }} EUR</p>
+        </div>
+        <div class="property-card-footer">
+            <a href="{% url 'property-update-html' property.id %}" class="btn-tertiary">Edytuj</a>
+            <a href="{% url 'property-detail-html' property.id %}" class="btn">Podgląd</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Nie masz jeszcze żadnych ofert.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -32,7 +32,7 @@ class KlientAdmin(admin.ModelAdmin):
     search_fields = ['imie', 'nazwisko']
 
 
-# REGISTER MODELS
+
 admin.site.register(Agent, AgentAdmin)
 admin.site.register(PropertyType, PropertyTypeAdmin)
 admin.site.register(Property, PropertyAdmin)

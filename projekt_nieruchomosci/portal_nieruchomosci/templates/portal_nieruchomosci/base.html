@@ -3,65 +3,204 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %} | Portal Nieruchomości</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portal Nieruchomości{% endblock %} | SWPS</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 0;
             background: #f5f7fb;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
+        a { text-decoration: none; color: inherit; }
+        
+        
         #header {
             background: #3056d3;
             color: white;
             padding: 20px;
             text-align: center;
         }
+        #header h1 { margin: 0; font-weight: 400; }
 
-        #content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        #footer {
-            background: #e9ecf3;
-            padding: 15px;
-            text-align: center;
-            margin-top: 40px;
-            color: #555;
-        }
-
+        
         nav {
             background: #1f3faa;
-            padding: 10px;
-            text-align: center;
-            display: flex; 
-            justify-content: center; 
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-
         nav a {
             color: white;
-            margin: 0 12px;
-            text-decoration: none;
-            font-weight: 600;
+            margin: 0 5px; 
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        nav a:hover { background-color: rgba(255, 255, 255, 0.2); }
+        
+        
+        .agent-link {
+            background-color: #10b981; 
+        }
+        .agent-link:hover {
+            background-color: #059669 !important;
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .user-section {
+            border-left: 1px solid rgba(255,255,255,0.3);
+            padding-left: 15px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .user-info { color: #dbeafe; font-size: 0.9em; margin-right: 10px; }
+        .btn-auth { border: 1px solid white; padding: 4px 10px; border-radius: 4px; font-size: 0.9em; }
+        .btn-auth:hover { background: white; color: #1f3faa; }
+
+        
+        #content {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            flex: 1; 
         }
 
-        .user-info {
-            color: #a5d5ff;
-            font-size: 0.9em;
-            margin-left: 20px;
-            border-left: 1px solid #ffffff50;
-            padding-left: 20px;
+        
+        .btn {
+            display: inline-block;
+            background-color: #3056d3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #1f3faa; color: white; }
+
+        .btn-tertiary {
+            display: inline-block;
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 8px 16px;
+            border-radius: 5px;
+            margin-left: 5px;
+            font-size: 0.95em;
+        }
+        .btn-tertiary:hover { background-color: #cbd5e1; }
+        
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover { background-color: #dc2626; }
+
+        
+        .simple-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .simple-table th, .simple-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .simple-table th { background-color: #f8fafc; font-weight: 600; color: #475569; }
+        .simple-table tr:last-child td { border-bottom: none; }
+        .simple-table tr:hover { background-color: #f1f5f9; }
+
+        
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .property-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .property-card-header {
+            background: #f1f5f9;
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .property-card-header h3 { margin: 0; color: #3056d3; font-size: 1.2em; }
+        .property-card-body { padding: 15px; flex: 1; }
+        .property-card-footer {
+            padding: 15px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            text-align: right;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        
+        form p { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 500; color: #4b5563; }
+        input[type="text"], input[type="number"], input[type="password"], select, textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3056d3;
+            box-shadow: 0 0 0 3px rgba(48, 86, 211, 0.1);
+        }
+
+        
+        #footer {
+            background: #e9ecf3;
+            padding: 20px;
+            text-align: center;
+            color: #64748b;
+            margin-top: auto;
+            border-top: 1px solid #cbd5e1;
         }
     </style>
 </head>
@@ -73,32 +212,47 @@
     </div>
 
     <nav>
-        <a href="{% url 'property-list-html' %}">Oferty</a>
+        <a href="{% url 'property-list-html' %}">Wszystkie Oferty</a>
         <a href="{% url 'agent-list-html' %}">Agenci</a>
-        {% if request.user.is_superuser %}
-        <a href="{% url 'klient-list-html' %}">Klienci</a>
-        {% endif %}
         <a href="{% url 'propertytype-list-html' %}">Typy nieruchomości</a>
 
-        {% if request.user.is_authenticated %}
-            <span class="user-info">
-                Witaj, <strong>{{ request.user.username }}</strong>!
-            </span>
-            <a href="{% url 'user-logout' %}" style="color: #ffbdbd;">(Wyloguj)</a>
-        {% else %}
-            <span class="user-info" style="border: none;">
-                <a href="{% url 'user-login' %}" style="color: #fff;"> Zaloguj się</a>
-            </span>
+        {% if perms.portal_nieruchomosci.view_klient or request.user.is_superuser %}
+            <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.3); margin: 0 10px;"></div>
+            
+            <a href="{% url 'agent-my-offers' %}" class="agent-link">Moje Oferty</a>
+            <a href="{% url 'agent-my-clients' %}" class="agent-link">Moi Klienci</a>
+            <a href="{% url 'klient-list-html' %}" class="agent-link">Wszyscy Klienci</a>
         {% endif %}
-        </nav>
+        
+
+        <div class="user-section">
+            {% if request.user.is_authenticated %}
+                <span class="user-info">
+                    Witaj, <strong>{{ request.user.username }}</strong>!
+                </span>
+                <a href="{% url 'user-logout' %}" style="color: #fca5a5; font-size: 0.9em;">(Wyloguj)</a>
+            {% else %}
+                <a href="{% url 'user-signup' %}" class="btn-auth" style="margin-right:10px;">Rejestracja</a>
+                <a href="{% url 'user-login' %}" style="color: white; font-weight: bold;">Zaloguj</a>
+            {% endif %}
+        </div>
+    </nav>
 
     <div id="content">
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 10px; background: #e0f2fe; color: #0284c7; margin-bottom: 20px; border-radius: 5px; border: 1px solid #bae6fd;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
         {% block content %}
         {% endblock %}
     </div>
 
     <div id="footer">
-        <p>© Berulia Portal Nieruchomości SWPS PAW 2025/26</p>
+        <p>&copy; Berulia Portal Nieruchomości</p>
     </div>
 
 </body>
